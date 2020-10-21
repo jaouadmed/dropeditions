@@ -14,8 +14,8 @@ export class MarketstackService {
 
   getClosingPrice (day, symbols) {
 
-    let fullpath = this.path + "/" + day + "?symbols=" + symbols +  "&access_key=c3e426520e2bf0a4e540e9b08b078033";
-    return this.http.get(fullpath)
+    const fullpath = this.path + "/" + day + "?symbols=" + symbols +  "&access_key=c3e426520e2bf0a4e540e9b08b078033";
+    return this.http.get(fullpath);
 
   }
 }
