@@ -10,6 +10,7 @@ export class AuthenticationService {
   jwt;
   username;
   roles: Array<string>;
+  apikey;
 
   constructor(private http: HttpClient) { }
 
@@ -29,6 +30,7 @@ export class AuthenticationService {
     const objJWT = jwtHelper.decodeToken(this.jwt);
     this.username = objJWT.obj;
     this.roles = objJWT.roles;
+    this.apikey = objJWT.apikey;
   }
 
   isUser() {
@@ -54,5 +56,9 @@ export class AuthenticationService {
     this.jwt = undefined;
     this.username = undefined;
     this.roles = undefined;
+  }
+
+  getApiKey(){
+    return this.apikey;
   }
 }

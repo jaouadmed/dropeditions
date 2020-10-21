@@ -1,5 +1,6 @@
 package org.sid.security;
 
+import org.sid.dao.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private UserDetailsService userDetailsService;
   @Autowired
   private BCryptPasswordEncoder bCryptPasswordEncoder;
+  
+  @Autowired
+  private AppUserRepository appUserRepository;
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -31,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests().antMatchers("/section1/**", "/section2/**", "/section3/**").hasAnyAuthority("USER");
     http.authorizeRequests().anyRequest().authenticated();
 
-    http.addFilter(new JWTAuthenticationFilter(authenticationManager()));
+    http.addFilter(new JWTAuthenticationFilter(authenticationManager(), appUserRepository));
     http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
 }

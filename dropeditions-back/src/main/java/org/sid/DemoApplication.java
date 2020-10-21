@@ -38,9 +38,9 @@ public class DemoApplication {
 			appRoleRepository.save(new AppRole(null, "USER"));
 			
 			
-			appUserRepository.save(new AppUser(null, "joe", bCryptPasswordEncoder.encode("ok"), true, "ok", null));
-			appUserRepository.save(new AppUser(null, "joe1", bCryptPasswordEncoder.encode("ok1"), true, "ok1", null));
-			appUserRepository.save(new AppUser(null, "joe2", bCryptPasswordEncoder.encode("ok2"), true, "ok2", null));
+			appUserRepository.save(new AppUser(null, "joe", bCryptPasswordEncoder.encode("ok"), true, "c3e426520e2bf0a4e540e9b08b078033", null));
+			appUserRepository.save(new AppUser(null, "joe1", bCryptPasswordEncoder.encode("ok1"), true, "c3e426520e2bf0a4e540e9b08b078033", null));
+			appUserRepository.save(new AppUser(null, "joe2", bCryptPasswordEncoder.encode("ok2"), true, "c3e426520e2bf0a4e540e9b08b078033", null));
 
 			appUserRepository.findAll().forEach(p -> System.out.println(p.getUsername()));
 

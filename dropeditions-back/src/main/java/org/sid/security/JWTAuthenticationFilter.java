@@ -3,7 +3,10 @@ package org.sid.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.sid.dao.AppUserRepository;
 import org.sid.entities.AppUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,9 +28,13 @@ import java.util.List;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
   private AuthenticationManager authenticationManager;
-
-  public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+  
+  private AppUserRepository appUserRepository;
+  
+  
+  public JWTAuthenticationFilter(AuthenticationManager authenticationManager, AppUserRepository appUserRepository) {
     this.authenticationManager = authenticationManager;
+    this.appUserRepository = appUserRepository;
   }
 
   @Override
@@ -55,9 +62,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     String jwt = JWT.create()
             .withIssuer(request.getRequestURI())
             .withSubject(user.getUsername())
+            
             .withArrayClaim("roles", roles.toArray(new String[roles.size()]))
+            
+            .withClaim("apike", appUserRepository.findByUsername(user.getUsername()).getApiKey())
+            
             .withExpiresAt(new Date(System.currentTimeMillis()+SecurityParams.EXPERATION))
             .sign(Algorithm.HMAC256(SecurityParams.SECRET));
     response.addHeader(SecurityParams.JWT_HEADER_NAME, jwt);
+    //response.addHeader("apikey", appUserRepository.findByUsername(user.getUsername()).getApiKey());
   }
 }
