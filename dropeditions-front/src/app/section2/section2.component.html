@@ -1,3 +1,18 @@
-<p>
-  section2 works!
-</p>
+<div class="container card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"> Stock </th>
+          <th scope="col"> Cours de clôture </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td>{{ item.symbol }}</td>
+          <td>{{ item.close }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

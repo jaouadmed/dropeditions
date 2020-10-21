@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MarketstackService } from '../services/marketstack.service';
 
 @Component({
   selector: 'app-section2',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Section2Component implements OnInit {
 
-  constructor() { }
+  items = [
+    {symbol: "MSFT", close: -1},
+    {symbol: "GOOGL", close: -1},
+    {symbol: "AMZN", close: -1},
+  ]
 
+  constructor(private marketstackService: MarketstackService) { }
+  
   ngOnInit() {
+    
+    this.marketstackService.getClosingPrice("2020-01-04", "MSFT,GOOGL,AMZN").subscribe(response => {
+      this.items = response['data'].map(item => { return {symbol: item.symbol, close: item.close}; } );
+    }, err => {
+      console.log(err);
+    });
   }
 
 }
