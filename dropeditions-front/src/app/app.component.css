@@ -6,3 +6,8 @@
     padding: 2px; /* firefox bug fix */
     width: auto;
   }
+  .navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+}
