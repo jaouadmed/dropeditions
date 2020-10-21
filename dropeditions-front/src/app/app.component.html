@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand " href="#">
+        <img src="assets\img\dropeditions-logo1.png" alt="dropeditions">
+      </a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li>
+        <a *ngIf="!isAuthenticated()" [routerLink]="['/login']"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+        <a class="btn" *ngIf="isAuthenticated()" (click)="logout()"><span *ngIf="isAuthenticated()" class="glyphicon glyphicon-log-out"></span> Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="row">
+  <div class="col-md-9">
+    <router-outlet></router-outlet>
+  </div>
+</div>
