@@ -18,9 +18,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private UserDetailsService userDetailsService;
   @Autowired
   private BCryptPasswordEncoder bCryptPasswordEncoder;
-  
-  @Autowired
-  private AppUserRepository appUserRepository;
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -31,11 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable();
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    http.authorizeRequests().antMatchers("/login/**", "/home/**").permitAll();
+    http.authorizeRequests().antMatchers("/login/**", "/register/**", "/home/**").permitAll();
     http.authorizeRequests().antMatchers("/section1/**", "/section2/**", "/section3/**").hasAnyAuthority("USER");
     http.authorizeRequests().anyRequest().authenticated();
 
-    http.addFilter(new JWTAuthenticationFilter(authenticationManager(), appUserRepository));
+    http.addFilter(new JWTAuthenticationFilter(authenticationManager()));
     http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
 }

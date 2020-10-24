@@ -1,5 +1,8 @@
 package org.sid;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.sid.dao.AppRoleRepository;
 import org.sid.dao.AppUserRepository;
 import org.sid.entities.AppRole;
@@ -11,7 +14,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 
 @SpringBootApplication
 public class DemoApplication {
@@ -35,14 +37,17 @@ public class DemoApplication {
 			appUserRepository.deleteAll();
 			appRoleRepository.deleteAll();
 
-			appRoleRepository.save(new AppRole(null, "USER"));
+			AppRole ar = appRoleRepository.save(new AppRole(null, "USER"));
 			
+			List<AppRole> ars = new ArrayList<AppRole>();
+			ars.add(ar);
 			
-			appUserRepository.save(new AppUser(null, "joe", bCryptPasswordEncoder.encode("ok"), true, "c3e426520e2bf0a4e540e9b08b078033", null));
-			appUserRepository.save(new AppUser(null, "joe1", bCryptPasswordEncoder.encode("ok1"), true, "c3e426520e2bf0a4e540e9b08b078033", null));
-			appUserRepository.save(new AppUser(null, "joe2", bCryptPasswordEncoder.encode("ok2"), true, "c3e426520e2bf0a4e540e9b08b078033", null));
-
+			appUserRepository.save(new AppUser(null, "joe", bCryptPasswordEncoder.encode("ok"), true, "c3e426520e2bf0a4e540e9b08b078033", ars));
+			appUserRepository.save(new AppUser(null, "joe1", bCryptPasswordEncoder.encode("ok1"), true, "c3e426520e2bf0a4e540e9b08b078033", ars));
+			appUserRepository.save(new AppUser(null, "joe2", bCryptPasswordEncoder.encode("ok2"), true, "c3e426520e2bf0a4e540e9b08b078033", ars));
+			
 			appUserRepository.findAll().forEach(p -> System.out.println(p.getUsername()));
+			System.out.println(ar);
 
 		};
 	}

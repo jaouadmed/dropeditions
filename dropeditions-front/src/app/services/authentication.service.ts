@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AppConfigService } from './app-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  host2 = 'http://localhost:8080';
   jwt;
   username;
   roles: Array<string>;
-  apikey;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private appConfig: AppConfigService) { }
 
   login(data) {
     console.log(data);
-    return this.http.post(this.host2 + '/login', data, {observe: 'response'});
+    return this.http.post(this.appConfig.backendUrl + '/login', data, {observe: 'response'});
+  }
+
+  register(data) {
+    console.log(data);
+    return this.http.post(this.appConfig.backendUrl + '/register', data, {observe: 'response'});
   }
 
   saveToken(jwt) {
@@ -30,7 +34,6 @@ export class AuthenticationService {
     const objJWT = jwtHelper.decodeToken(this.jwt);
     this.username = objJWT.obj;
     this.roles = objJWT.roles;
-    this.apikey = objJWT.apikey;
   }
 
   isUser() {
@@ -56,9 +59,5 @@ export class AuthenticationService {
     this.jwt = undefined;
     this.username = undefined;
     this.roles = undefined;
-  }
-
-  getApiKey(){
-    return this.apikey;
   }
 }

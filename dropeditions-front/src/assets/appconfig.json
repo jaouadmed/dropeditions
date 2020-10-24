@@ -1,0 +1,7 @@
+{
+
+    "backendUrl": "http://localhost:8080",
+    "apiUrl": "http://api.marketstack.com/v1/eod",
+    "apiKey": "c3e426520e2bf0a4e540e9b08b078033"
+    
+}

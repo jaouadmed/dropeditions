@@ -1,8 +1,8 @@
 <div class="col-md-6">
   <div class="panel panel-default">
-    <div class="panel-heading">Aythentification</div>
+    <div class="panel-heading">Creation du compte</div>
     <div class="panel-body">
-      <form #f="ngForm" (ngSubmit)="onLogin(f.value)" >
+      <form #f="ngForm" (ngSubmit)="onRegister(f.value)" >
         <div class="form-group">
           <label class="control-label">Username</label>
           <input type="text" name="username" ngModel class="form-control">
@@ -11,8 +11,11 @@
           <label class="control-label">Password</label>
           <input type="text" name="password" type="password" ngModel class="form-control">
         </div>
-        <button type="submit" class="btn btn-default">Login</button>
-        <button [routerLink]="['/register']" class="btn btn-default">Register</button>
+        <div class="form-group">
+          <label class="control-label">Confirmation Password</label>
+          <input type="text" name="confirmedPassword" type="password" ngModel class="form-control">
+        </div>
+        <button type="submit" class="btn btn-default">Register</button>
       </form>
     </div>
   </div>
