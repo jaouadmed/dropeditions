@@ -1,4 +1,6 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 
 @Component({
@@ -10,7 +12,7 @@ export class AppComponent {
   title = 'Dropeditions';
   username;
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.loadToken();
@@ -29,5 +31,6 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
+    this.router.navigateByUrl("/");
   }
 }

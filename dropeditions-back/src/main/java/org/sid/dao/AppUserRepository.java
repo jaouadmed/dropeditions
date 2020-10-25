@@ -8,5 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
 
   public AppUser findByUsername(String username);
+  AppUser findByEmail(String email);
+  AppUser findByResetToken(String resetToken);
 
 }

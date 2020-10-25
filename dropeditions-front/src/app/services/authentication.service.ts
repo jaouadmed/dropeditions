@@ -23,6 +23,16 @@ export class AuthenticationService {
     return this.http.post(this.appConfig.backendUrl + '/register', data, {observe: 'response'});
   }
 
+  passwordForgotten(data) {
+    console.log(data);
+    return this.http.post(this.appConfig.backendUrl + '/passwordForgotten', data, {observe: 'response'});
+  }
+
+  passwordChange(data) {
+    console.log(data);
+    return this.http.post(this.appConfig.backendUrl + '/passwordChange', data, {observe: 'response'});
+  }
+
   saveToken(jwt) {
     localStorage.setItem('token', jwt);
     this.jwt = jwt;
@@ -37,7 +47,7 @@ export class AuthenticationService {
   }
 
   isUser() {
-    return this.roles.indexOf('USER') >= 0;
+    return this.roles? this.roles.indexOf('USER') >= 0 : false;
   }
 
 

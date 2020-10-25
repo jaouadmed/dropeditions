@@ -11,6 +11,8 @@ import { Section2Component } from './section2/section2.component';
 import { Section3Component } from './section3/section3.component';
 import { AppConfigService } from './services/app-config.service';
 import { RegisterComponent } from './register/register.component';
+import { CanActivateService } from './services/can-activate.service'
+import { PasswordComponent } from './password/password.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +22,13 @@ import { RegisterComponent } from './register/register.component';
     Section2Component,
     Section3Component,
     RegisterComponent,
+    PasswordComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, FormsModule
+    HttpClientModule, FormsModule,
+    
   ],
   providers: [
     {
@@ -36,7 +40,8 @@ import { RegisterComponent } from './register/register.component';
           return appConfigService.loadAppConfig();
         };
       }
-    }
+    },
+    CanActivateService
   ],
   bootstrap: [AppComponent]
 })

@@ -23,7 +23,7 @@ public class AccountServiceImpl implements AccountService {
   private BCryptPasswordEncoder bCryptPasswordEncoder;
 
   @Override
-  public AppUser saveUser(String username, String password, String confirmedPassword) {
+  public AppUser saveUser(String username, String email, String password, String confirmedPassword) {
     AppUser user = appUserRepository.findByUsername(username);
     if(user != null) throw new RuntimeException("User already exists!");
     
@@ -32,28 +32,49 @@ public class AccountServiceImpl implements AccountService {
     AppUser appUser = new AppUser();
     appUser.setId(null);
     appUser.setUsername(username);
+    appUser.setEmail(email);
     appUser.setPassword(bCryptPasswordEncoder.encode(password));
     appUser.setActive(true);
     appUserRepository.save(appUser);
     assignRoleToUser(username, "USER");
     return appUser;
   }
+  
+  @Override
+	public AppUser saveToken(AppUser user) {
+		return appUserRepository.save(user);
+	}
 
   @Override
   public AppUser loadUserByUsername(String username) {
     return appUserRepository.findByUsername(username);
   }
-
-  @Override
-  public void assignRoleToUser(String username, String rolename) {
-    AppUser appUser = appUserRepository.findByUsername(username);
-    AppRole appRole = appRoleRepository.findByRoleName(rolename);
-    appUser.getRoles().add(appRole);
-  }
   
   @Override
-	public boolean changePassword(String username, String password, String confirmedPassword) {
+	public AppUser loadUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		return false;
+		return appUserRepository.findByEmail(email);
+	}
+  
+  @Override
+	public AppUser loadUserByResetToken(String resetToken) {
+		// TODO Auto-generated method stub
+		return appUserRepository.findByResetToken(resetToken);
+	}
+	
+
+  @Override
+	public void assignRoleToUser(String username, String rolename) {
+	    AppUser appUser = appUserRepository.findByUsername(username);
+	    AppRole appRole = appRoleRepository.findByRoleName(rolename);
+	    appUser.getRoles().add(appRole);
+	}
+  
+  @Override
+	public boolean changePassword(AppUser user, String password, String confirmedPassword) {
+	    if(!password.equals(confirmedPassword)) throw new RuntimeException("Please confirm your password!");
+	    user.setPassword(bCryptPasswordEncoder.encode(password));
+	    appUserRepository.save(user);
+		return true;
 	}
 }

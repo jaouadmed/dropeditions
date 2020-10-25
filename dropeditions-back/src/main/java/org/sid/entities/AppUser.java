@@ -23,7 +23,12 @@ public class AppUser {
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
   private boolean active;
-  private String apiKey;
+  
+  @Column(name = "email", nullable = false, unique = true)
+  private String email;
+  
+  @Column(name = "reset_token")
+  private String resetToken;
 
 
   @ManyToMany(fetch = FetchType.EAGER)

@@ -22,7 +22,6 @@ public class DemoApplication {
 	private AppUserRepository appUserRepository;
 	@Autowired
 	private AppRoleRepository appRoleRepository;
-	
 	@Autowired
 	  private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -42,9 +41,7 @@ public class DemoApplication {
 			List<AppRole> ars = new ArrayList<AppRole>();
 			ars.add(ar);
 			
-			appUserRepository.save(new AppUser(null, "joe", bCryptPasswordEncoder.encode("ok"), true, "c3e426520e2bf0a4e540e9b08b078033", ars));
-			appUserRepository.save(new AppUser(null, "joe1", bCryptPasswordEncoder.encode("ok1"), true, "c3e426520e2bf0a4e540e9b08b078033", ars));
-			appUserRepository.save(new AppUser(null, "joe2", bCryptPasswordEncoder.encode("ok2"), true, "c3e426520e2bf0a4e540e9b08b078033", ars));
+			appUserRepository.save(new AppUser(null, "joe", bCryptPasswordEncoder.encode("ok"), true, "jaouadmohamed0@gmail.com", null, ars));
 			
 			appUserRepository.findAll().forEach(p -> System.out.println(p.getUsername()));
 			System.out.println(ar);
